@@ -12,13 +12,13 @@ public interface ILoginInteractor {
 
         //void onPasswordError();
 
-        //void onSuccess();
+        void onSuccess();
 
         void onFailure( String error );
 
         //void onRestablecerPassword(String message);
     }
 
-        void login(String username, String password, Context context, LoginPresenter listener ) ;
+        void login( String username, String password, Context context, LoginPresenter listener ) ;
     }
 

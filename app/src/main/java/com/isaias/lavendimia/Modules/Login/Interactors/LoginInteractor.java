@@ -10,6 +10,11 @@ import com.isaias.lavendimia.Utils.*;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -40,13 +45,29 @@ public class LoginInteractor implements ILoginInteractor {
         this.asyncClientUtil.post( context, url, entity, PETICION_TIPO_JSON, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                System.out.println( statusCode );
+                JSONObject jsonResponse = null;
+                try {
+                    jsonResponse = new JSONObject( new String( responseBody ) );
+                    listener.onSuccess( jsonResponse.toString() );
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                System.out.println( statusCode);
-                listener.onFailure( String.valueOf( statusCode ) );
+                try {
+                    if ( statusCode >= 500 ){
+                        listener.onFailure( "Ocurrió un error interno, intente más tarde" );
+                    }
+                    else {
+                        JSONObject jsonResponse = new JSONObject( new String( responseBody ) );
+                        listener.onFailure( jsonResponse.getString( "message" ) );
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

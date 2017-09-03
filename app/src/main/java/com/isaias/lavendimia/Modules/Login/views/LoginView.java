@@ -6,7 +6,7 @@ public interface LoginView {
 
     void mostrarDialogo( String mensaje );
 
-    void ocultarDialogo();
+    void mostrarError(String error);
 
-    void usuarioNoExistente( String error );
+    void ocultarDialogo();
 }

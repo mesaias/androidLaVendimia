@@ -11,7 +11,7 @@ import cz.msebera.android.httpclient.HttpEntity;
 
 public class AsyncClientUtil {
 
-    private static final String BASE_URL = "http://192.168.0.8:8085/credex/api/";
+    private static final String BASE_URL = "http://54.213.229.60:8085/credex/api/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
