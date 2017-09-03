@@ -23,11 +23,19 @@ public class LoginPresenter
     @Override
     public void validarUsuarioYPassword( String username, String password ) {
 
-        this.iLoginInteractor.login( username, password, mContext );
+        loginView.mostrarDialogo( "Verificando los datos, por favor espere" );
+        this.iLoginInteractor.login( username, password,  mContext, this);
+    }
+
+    @Override
+    public void onFailure( String error ) {
+        loginView.ocultarDialogo();
+        loginView.usuarioNoExistente( error );
     }
 
     @Override
     public void validarTeclado() {
 
     }
+
 }
